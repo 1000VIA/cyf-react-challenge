@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { isDoExpression } from '@babel/types';
 
 class Button extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      randomCities: [],
       countrys: [{ "name": "Afghanistan", "capital": "Kabul" },
       { "name": "Aland Islands", "capital": "Mariehamn" },
       { "name": "Albania", "capital": "Tirana" },
@@ -28,36 +30,28 @@ class Button extends Component {
       ]
     }
   }
-
-
   randomCoutrys = () => {
-    const cities = [];
-    const index = Math.round(Math.random() * (5 - 0) + 0);
-
-    // this.setState({
-    //   // countrys:
-    // })
-    const city = cities[index];
-    console.log(index);
-    return index
+    const countries = [];
+    for (let i = 0; i < 5; i++) {
+      const index = Math.round(Math.random() *
+        (this.state.countrys.length - 0) + 0);
+      const country = this.state.countrys[index];
+      countries.push(country)
+    }
+    return countries
   }
-
-
-
-
+  componentDidMount() {
+    const randomCities = this.randomCoutrys();
+    this.setState({
+      randomCities: randomCities
+    })
+  }
   render() {
-    console.log(this.state.countrys.length);
-
     return (
-      this.state.countrys.map((country, indice) => <button key={indice}>{this.randomCoutrys()}</button>)
-
-    );
+      this.state.randomCities.map((country, index) => {
+        return <button key={index}>{country.name}</button>
+      }))
   }
 }
 
 export default Button;
-
-
-// const index = Math.random(Math.random() * (cities.length - 0) + 0)  randomCities.push(cities[index])
-
-// const indice = indexOf(this.state.countrys) === index ? this.state.countrys.name : undefined;
